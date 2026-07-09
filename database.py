@@ -3,16 +3,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Mengambil URL database dari environment Railway
+# 1. Ambil URL Database dari environment Railway
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL:
-    # Memastikan format driver menggunakan mysql+pymysql
+    # Ubah mysql:// bawaan Railway menjadi mysql+pymysql://
     if DATABASE_URL.startswith("mysql://"):
         DATABASE_URL = DATABASE_URL.replace("mysql://", "mysql+pymysql://", 1)
     SQLALCHEMY_DATABASE_URL = DATABASE_URL
 else:
-    # URL default jika dijalankan di localhost laptop
+    # Ini HANYA berjalan kalau kamu di laptop (XAMPP lokal)
     SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:@localhost/transgo_db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
